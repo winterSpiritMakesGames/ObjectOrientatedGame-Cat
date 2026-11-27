@@ -34,6 +34,7 @@ color startingScreen = color(178, 244, 255);
 PImage singlePlayer;
 PImage multiPlayer;
 PImage training;
+PImage icon;
 
 //Classes
 
@@ -49,17 +50,24 @@ void setup() {
   for (int i = 0; i < 500; i= i+ 100) {
     line(0, i, 700, i);
   }
+  singlePlayer = loadImage("Asset 1.png");
+  multiPlayer = loadImage("Asset 2.png");
+  training = loadImage("Asset 3.png");
+  icon = loadImage("Asset 4.png");
   for (int i = 0; i < 3; i++) {
     lives.add(new Lives());
   }
 }
 
 void draw() {
-  background(startingScreen);
+  //background(startingScreen);
   if (!gameStart) {
     //singleplayer button
     fill(100, 0, 0);
-    rect(500, 200, 200, 100);
+ //   rect(500, 200, 200, 100);
+   image(singlePlayer, 300, 100, 350, 100);
+   image(multiPlayer, 375, 210, 275, 90);
+   image(training, 300, 320, 355, 90);
   }
   if (trainingBool) {
     gameStart = true;
@@ -72,7 +80,7 @@ void draw() {
 }
 void mousePressed() {
   if (!gameStart) {
-    if ((mouseX > 400 && mouseX < 600) && (mouseY >150 && mouseY <250)) {
+    if ((mouseX > 300 && mouseX < 600) && (mouseY >100 && mouseY <200)) {
       println("Pressed training");
       trainingBool = true;
     }
