@@ -7,6 +7,11 @@
 boolean gameOver = false;
 boolean multiplayer = false;
 boolean isReset = false;
+boolean gameStart = false;
+boolean choiceDone = false;
+
+//int
+int randomMap;
 
 //arrayLists
 ArrayList<Lives> lives = new ArrayList<Lives>();
@@ -15,9 +20,43 @@ ArrayList<PImage> cat1Animations = new ArrayList<PImage>();
 //string for player choice
 String catChoice = "";
 
+//colors
+color startingScreen = color(178, 244, 255);
+
+//PImages
+
+//button images
+PImage singlePlayer;
+PImage multiPlayer;
+PImage training;
 void setup() {
   size(700, 500);
+  rectMode(CENTER);
+  for (int i = 0; i < 700; i= i+ 100) {
+    line(i, 0, i, 500);
+  }
+  for (int i = 0; i < 500; i= i+ 100) {
+    line(0, i, 700, i);
+  }
   for (int i = 0; i < 3; i++) {
     lives.add(new Lives());
+  }
+}
+
+void draw() {
+  if (!gameStart) {
+    //  background(startingScreen);
+    //singleplayer button
+    fill(100, 0, 0);
+    rect(500, 200, 200, 100);
+  }
+  if (choiceDone) {
+    println("Player Choice Selected");
+  }
+}
+void mousePressed() {
+  if ((mouseX > 400 && mouseX < 600) && (mouseY >150 && mouseY <250)) {
+    println("Pressed singlePlayer");
+    multiplayer = true;
   }
 }
