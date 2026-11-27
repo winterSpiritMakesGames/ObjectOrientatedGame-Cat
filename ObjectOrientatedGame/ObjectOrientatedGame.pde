@@ -9,9 +9,14 @@ boolean multiplayer = false;
 boolean isReset = false;
 boolean gameStart = false;
 boolean choiceDone = false;
+boolean trainingBool = false;
 
 //int
 int randomMap;
+int timer;
+
+//PVector (gravity)
+PVector gravity = new PVector(0, -9.8);
 
 //arrayLists
 ArrayList<Lives> lives = new ArrayList<Lives>();
@@ -29,9 +34,15 @@ color startingScreen = color(178, 244, 255);
 PImage singlePlayer;
 PImage multiPlayer;
 PImage training;
+
+//Classes
+
+Player player = new Player();
+
 void setup() {
   size(700, 500);
   rectMode(CENTER);
+  ellipseMode(CENTER);
   for (int i = 0; i < 700; i= i+ 100) {
     line(i, 0, i, 500);
   }
@@ -44,19 +55,55 @@ void setup() {
 }
 
 void draw() {
+  background(startingScreen);
   if (!gameStart) {
-    //  background(startingScreen);
     //singleplayer button
     fill(100, 0, 0);
     rect(500, 200, 200, 100);
+  }
+  if (trainingBool) {
+    gameStart = true;
+    player.display();
+    player.move();
   }
   if (choiceDone) {
     println("Player Choice Selected");
   }
 }
 void mousePressed() {
-  if ((mouseX > 400 && mouseX < 600) && (mouseY >150 && mouseY <250)) {
-    println("Pressed singlePlayer");
-    multiplayer = true;
+  if (!gameStart) {
+    if ((mouseX > 400 && mouseX < 600) && (mouseY >150 && mouseY <250)) {
+      println("Pressed training");
+      trainingBool = true;
+    }
+  }
+}
+void keyPressed() {
+  if (!multiplayer) {
+    if (key == 'w') {
+      player.jump();
+    }
+    if (key == 'a') {
+      player.left = true;
+    }
+    if (key == 's') {
+      player.dodge = true;
+    }
+    if (key == 'd') {
+      player.right = true;
+    }
+  }
+}
+void keyReleased(){
+  if (!multiplayer) {
+    if (key == 'a') {
+      player.left = false;
+    }
+    if (key == 's') {
+      player.dodge = false;
+    }
+    if (key == 'd') {
+      player.right = false;
+    }
   }
 }
